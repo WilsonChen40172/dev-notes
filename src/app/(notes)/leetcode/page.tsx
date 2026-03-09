@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 interface Problem {
     id: number;
@@ -6,6 +7,7 @@ interface Problem {
     difficulty: 'Easy' | 'Medium' | 'Hard';
     tags: string[];
     note: string;
+    slug?: string; // 有詳細筆記的題目
 }
 
 export default function LeetCodePage() {
@@ -15,14 +17,16 @@ export default function LeetCodePage() {
             title: "Two Sum",
             difficulty: "Easy",
             tags: ["Array", "Hash Table"],
-            note: "使用 Hash Map 儲存走過的數值與索引，只需遍歷一次 O(n)。"
+            note: "使用 Hash Map 儲存走過的數值與索引，只需遍歷一次 O(n)。",
+            slug: "two-sum",
         },
         {
             id: 15,
             title: "3Sum",
             difficulty: "Medium",
             tags: ["Array", "Two Pointers"],
-            note: "先排序，固定一個數後，使用雙指針尋找另外兩個數，注意去重。"
+            note: "先排序，固定一個數後，使用雙指針尋找另外兩個數，注意去重。",
+            slug: "3sum",
         },
         {
             id: 206,
@@ -36,7 +40,8 @@ export default function LeetCodePage() {
             title: "Trapping Rain Water",
             difficulty: "Hard",
             tags: ["Two Pointers", "DP"],
-            note: "左右兩邊最高牆取 min 減去當前高度。可用雙指針優化空間至 O(1)。"
+            note: "左右兩邊最高牆取 min 減去當前高度。可用雙指針優化空間至 O(1)。",
+            slug: "trapping-rain-water",
         }
     ];
 
@@ -63,9 +68,19 @@ export default function LeetCodePage() {
                     <div key={p.id} className="p-6 rounded-2xl border border-neutral-800 bg-neutral-900/50 hover:border-neutral-700 transition-colors group">
                         <div className="flex justify-between items-start mb-3">
                             <div>
-                                <h3 className="text-xl font-semibold text-neutral-200 group-hover:text-yellow-200 transition-colors">
-                                    {p.id}. {p.title}
-                                </h3>
+                                <div className="flex items-center gap-2">
+                                    <h3 className="text-xl font-semibold text-neutral-200 group-hover:text-yellow-200 transition-colors">
+                                        {p.id}. {p.title}
+                                    </h3>
+                                    {p.slug && (
+                                        <Link
+                                            href={`/leetcode/${p.slug}`}
+                                            className="text-xs px-2 py-0.5 rounded bg-yellow-900/40 text-yellow-400 border border-yellow-900 hover:bg-yellow-900/70 transition-colors"
+                                        >
+                                            詳細筆記 →
+                                        </Link>
+                                    )}
+                                </div>
                                 <div className="flex gap-2 mt-2">
                                     {p.tags.map(tag => (
                                         <span key={tag} className="text-xs text-neutral-500 bg-neutral-800 px-2 py-0.5 rounded">

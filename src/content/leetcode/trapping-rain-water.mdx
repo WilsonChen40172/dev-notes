@@ -1,0 +1,107 @@
+# 42. Trapping Rain Water（接雨水）
+
+## 題目描述
+
+給定 `n` 個非負整數，代表每個寬度為 1 的柱子高度圖，計算下雨後能夠接住多少雨水。
+
+> 原題連結：[LeetCode #42 - Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)
+
+## 解題思路
+
+### 解法一：預處理左右最大值陣列 — O(n) 時間、O(n) 空間
+
+對每個位置 `i`，它能儲存的水量 = `min(leftMax[i], rightMax[i]) - height[i]`
+
+1. 建立 `leftMax` 陣列：`leftMax[i]` = `height[0..i]` 的最大值
+2. 建立 `rightMax` 陣列：`rightMax[i]` = `height[i..n-1]` 的最大值
+3. 累加每個位置的儲水量
+
+### 解法二：雙指針 — O(n) 時間、O(1) 空間（最佳）
+
+不需要額外的陣列，用兩個指針 `left`、`right` 從兩端往中間靠攏：
+
+- 維護 `leftMax`、`rightMax` 兩個變數
+- 若 `leftMax < rightMax`：左側的儲水量由 `leftMax` 決定，處理 `left` 位置並 `left++`
+- 否則：右側的儲水量由 `rightMax` 決定，處理 `right` 位置並 `right--`
+
+**直覺：** 儲水量由「較矮的那堵牆」決定，所以先處理較矮的一側是安全的。
+
+|                  | 時間複雜度 | 空間複雜度 |
+| ---------------- | ---------- | ---------- |
+| 預處理陣列       | O(n)       | O(n)       |
+| 雙指針（最佳解） | O(n)       | O(1)       |
+
+## TypeScript 實作
+
+### 解法一：預處理陣列
+
+```typescript
+function trap(height: number[]): number {
+  const n = height.length;
+  const leftMax = new Array(n).fill(0);
+  const rightMax = new Array(n).fill(0);
+
+  leftMax[0] = height[0];
+  for (let i = 1; i < n; i++) {
+    leftMax[i] = Math.max(leftMax[i - 1], height[i]);
+  }
+
+  rightMax[n - 1] = height[n - 1];
+  for (let i = n - 2; i >= 0; i--) {
+    rightMax[i] = Math.max(rightMax[i + 1], height[i]);
+  }
+
+  let water = 0;
+  for (let i = 0; i < n; i++) {
+    water += Math.min(leftMax[i], rightMax[i]) - height[i];
+  }
+
+  return water;
+}
+```
+
+### 解法二：雙指針（推薦）
+
+```typescript
+function trap(height: number[]): number {
+  let left = 0;
+  let right = height.length - 1;
+  let leftMax = 0;
+  let rightMax = 0;
+  let water = 0;
+
+  while (left < right) {
+    if (height[left] < height[right]) {
+      if (height[left] >= leftMax) {
+        leftMax = height[left]; // 更新左側最大值
+      } else {
+        water += leftMax - height[left]; // 當前位置可儲水
+      }
+      left++;
+    } else {
+      if (height[right] >= rightMax) {
+        rightMax = height[right]; // 更新右側最大值
+      } else {
+        water += rightMax - height[right]; // 當前位置可儲水
+      }
+      right--;
+    }
+  }
+
+  return water;
+}
+```
+
+## 執行步驟範例
+
+以 `height = [0,1,0,2,1,0,1,3,2,1,2,1]` 為例，答案為 `6`。
+
+視覺化（`#` 為柱子，`~` 為積水）：
+
+```
+    #
+    #~~#~~~##~#
+#~##~##~#
+```
+
+每個位置的儲水量：`[0,0,1,0,1,2,1,0,0,1,0,0]`，總和 = `6`

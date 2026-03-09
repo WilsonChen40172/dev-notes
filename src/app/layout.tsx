@@ -2,6 +2,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Providers from "@/components/Providers";
+import { Analytics } from "@vercel/analytics/react";
 
 const BASE_URL = "https://dev-notes-m03d7ntmm-wilsonchen40172s-projects.vercel.app";
 
@@ -42,13 +44,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-TW">
-      <body className="bg-black text-neutral-300 min-h-screen font-sans antialiased">
-        <Navbar />
-        {/* 主要內容區塊置中，並限制最大寬度 */}
-        <main className="max-w-4xl mx-auto px-6 py-10 w-full">
-          {children}
-        </main>
+    <html lang="zh-TW" suppressHydrationWarning>
+      <body className="bg-white dark:bg-black text-neutral-700 dark:text-neutral-300 min-h-screen font-sans antialiased transition-colors duration-200">
+        <Providers>
+          <Navbar />
+          <main className="max-w-4xl mx-auto px-6 py-10 w-full">
+            {children}
+          </main>
+        </Providers>
+        <Analytics />
       </body>
     </html>
   );
