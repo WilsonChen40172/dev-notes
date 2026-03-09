@@ -1,0 +1,13 @@
+/* src/app/globals.css */
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-black text-neutral-300;
+  }
+
+  /* 覆蓋瀏覽器預設的連結顏色 (藍色/紫色)，改為繼承父層顏色 */
+  a {
+    @apply text-inherit hover:text-white transition-colors no-underline;
+  }
+}
