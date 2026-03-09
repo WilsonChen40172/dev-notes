@@ -1,16 +1,11 @@
 import createMDX from '@next/mdx';
-import rehypePrettyCode from 'rehype-pretty-code';
 
-/** @type {import('rehype-pretty-code').Options} */
-const options = {
-  // 你可以換成你喜歡的 VSCode 佈景主題，例如 'github-dark', 'dracula' 等
-  theme: 'one-dark-pro',
-};
-
+// rehype-pretty-code 改為在 mdx-components.tsx 透過 Shiki Server Component 處理
+// 原因：Turbopack 要求 loader options 必須可序列化，函數型插件不支援
 const withMDX = createMDX({
   options: {
     remarkPlugins: [],
-    rehypePlugins: [[rehypePrettyCode, options]],
+    rehypePlugins: [],
   },
 });
 
