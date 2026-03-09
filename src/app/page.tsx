@@ -1,8 +1,7 @@
 import Link from "next/link";
 
 const GITHUB_URL = "https://github.com/WilsonChen40172";
-const LINKEDIN_URL = "https://linkedin.com/in/your-linkedin"; // 換成你的 LinkedIn
-
+const LINKEDIN_URL = "https://www.linkedin.com/in/wilson-chen-301ab42a3/";
 export default function Home() {
   const topics = [
     {
