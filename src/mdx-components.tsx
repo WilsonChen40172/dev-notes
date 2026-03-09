@@ -27,14 +27,14 @@ async function Pre({ children }: { children?: React.ReactNode }) {
 
 const mdxComponents: MDXComponents = {
     h1: ({ children }) => <h1 className="text-3xl font-bold mt-8 mb-4">{children}</h1>,
-    h2: ({ children }) => <h2 className="text-2xl font-bold mt-6 mb-3 border-b border-neutral-700 pb-2">{children}</h2>,
-    p: ({ children }) => <p className="leading-relaxed mb-4 text-gray-300">{children}</p>,
+    h2: ({ children }) => <h2 className="text-2xl font-bold mt-6 mb-3 border-b border-neutral-200 dark:border-neutral-700 pb-2">{children}</h2>,
+    p: ({ children }) => <p className="leading-relaxed mb-4 text-neutral-700 dark:text-gray-300">{children}</p>,
     a: ({ href, children }) => <a href={href} className="text-blue-400 hover:underline">{children}</a>,
     pre: Pre as MDXComponents['pre'],
     code: ({ children, className }) => {
         if (!className) {
             return (
-                <code className="bg-neutral-800 px-1.5 py-0.5 rounded text-sm font-mono text-neutral-200">
+                <code className="bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-sm font-mono text-neutral-700 dark:text-neutral-200">
                     {children}
                 </code>
             )

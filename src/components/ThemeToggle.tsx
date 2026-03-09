@@ -14,7 +14,7 @@ export default function ThemeToggle() {
         <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             aria-label="切換深色/淺色主題"
-            className="w-8 h-8 flex items-center justify-center rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-lg text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
         >
             {theme === 'dark' ? (
                 // Sun icon

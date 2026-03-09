@@ -1,0 +1,68 @@
+# 20. Valid Parentheses（有效的括號）
+
+## 題目描述
+
+給定一個只包含 `(`、`)`、`{`、`}`、`[`、`]` 的字串 `s`，判斷括號是否有效。
+
+有效條件：
+
+1. 每個開括號必須有對應的相同類型的閉括號
+2. 開括號必須以正確的順序閉合
+
+> 原題連結：[LeetCode #20 - Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
+
+## 解題思路
+
+使用 **Stack（堆疊）** 是解此類問題的標準模式：
+
+- 遇到開括號 → push 進 Stack
+- 遇到閉括號 → 取出 Stack 頂端，確認是否為對應的開括號
+- 遍歷完成後，Stack 應為空才有效
+
+|       | 時間複雜度 | 空間複雜度 |
+| ----- | ---------- | ---------- |
+| Stack | O(n)       | O(n)       |
+
+## TypeScript 實作
+
+```typescript
+function isValid(s: string): boolean {
+  const stack: string[] = [];
+  const map: Record<string, string> = {
+    ")": "(",
+    "}": "{",
+    "]": "[",
+  };
+
+  for (const ch of s) {
+    if (ch === "(" || ch === "{" || ch === "[") {
+      stack.push(ch);
+    } else {
+      // 若 stack 為空或頂端不匹配，直接回傳 false
+      if (stack.pop() !== map[ch]) return false;
+    }
+  }
+
+  return stack.length === 0;
+}
+```
+
+## 執行步驟範例
+
+以 `s = "({[]})"` 為例：
+
+| 字元 | 動作        | Stack 狀態        |
+| ---- | ----------- | ----------------- |
+| `(`  | push        | `['(']`           |
+| `{`  | push        | `['(', '{']`      |
+| `[`  | push        | `['(', '{', '[']` |
+| `]`  | pop → `[` ✓ | `['(', '{']`      |
+| `}`  | pop → `{` ✓ | `['(']`           |
+| `)`  | pop → `(` ✓ | `[]`              |
+
+Stack 最終為空 → 回傳 `true` ✓
+
+## 常見陷阱
+
+- 閉括號比開括號多：`pop()` 時 stack 已為空，回傳 `undefined !== map[ch]` → `false` ✓
+- 開括號比閉括號多：遍歷結束後 `stack.length !== 0` → 回傳 `false` ✓

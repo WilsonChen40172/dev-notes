@@ -1,0 +1,80 @@
+# 49. Group Anagrams（字母異位詞分組）
+
+## 題目描述
+
+給定一個字串陣列 `strs`，將所有**字母異位詞**（Anagram）分組並回傳。
+
+字母異位詞是指字母組成相同、但排列不同的字串，例如 `"eat"`、`"tea"`、`"ate"` 互為異位詞。
+
+> 原題連結：[LeetCode #49 - Group Anagrams](https://leetcode.com/problems/group-anagrams/)
+
+## 解題思路
+
+**Hash Map + 排序作為 Key**
+
+同一組異位詞排序後的字串必定相同，因此以**排序後的字串**作為 Map 的 key，將各字串歸入對應的群組。
+
+|                | 時間複雜度     | 空間複雜度 |
+| -------------- | -------------- | ---------- |
+| Sort + HashMap | O(n × k log k) | O(n × k)   |
+
+其中 `n` 為字串數量，`k` 為最長字串長度。
+
+> **進階優化**：改用字元頻率陣列（26 個字母的計數）作為 key，可將 key 生成從 O(k log k) 降至 O(k)。
+
+## TypeScript 實作
+
+```typescript
+function groupAnagrams(strs: string[]): string[][] {
+  const map = new Map<string, string[]>();
+
+  for (const s of strs) {
+    // 排序後的字串作為 key，相同字母組成的字串會有相同 key
+    const key = s.split("").sort().join("");
+
+    if (!map.has(key)) {
+      map.set(key, []);
+    }
+    map.get(key)!.push(s);
+  }
+
+  return Array.from(map.values());
+}
+```
+
+## 執行步驟範例
+
+以 `strs = ["eat", "tea", "tan", "ate", "nat", "bat"]` 為例：
+
+| 字串    | 排序後 (key) | 分組                    |
+| ------- | ------------ | ----------------------- |
+| `"eat"` | `"aet"`      | `["eat"]`               |
+| `"tea"` | `"aet"`      | `["eat", "tea"]`        |
+| `"tan"` | `"ant"`      | `["tan"]`               |
+| `"ate"` | `"aet"`      | `["eat", "tea", "ate"]` |
+| `"nat"` | `"ant"`      | `["tan", "nat"]`        |
+| `"bat"` | `"abt"`      | `["bat"]`               |
+
+最終結果：`[["eat","tea","ate"], ["tan","nat"], ["bat"]]`
+
+## 字元頻率 Key（進階版）
+
+```typescript
+function groupAnagrams(strs: string[]): string[][] {
+  const map = new Map<string, string[]>();
+
+  for (const s of strs) {
+    // 用長度 26 的計數陣列取代排序，O(k) 生成 key
+    const count = new Array(26).fill(0);
+    for (const ch of s) {
+      count[ch.charCodeAt(0) - 97]++;
+    }
+    const key = count.join("#"); // e.g. "1#0#0...#1#0..." 避免數字黏連
+
+    if (!map.has(key)) map.set(key, []);
+    map.get(key)!.push(s);
+  }
+
+  return Array.from(map.values());
+}
+```

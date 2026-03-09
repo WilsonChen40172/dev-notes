@@ -1,0 +1,82 @@
+# 238. Product of Array Except Self（除自身以外陣列的乘積）
+
+## 題目描述
+
+給定整數陣列 `nums`，回傳陣列 `answer`，其中 `answer[i]` 等於 `nums` 中**除 `nums[i]` 之外**其餘各元素的乘積。
+
+限制：**不能使用除法**，且需要 O(n) 時間複雜度。
+
+> 原題連結：[LeetCode #238 - Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/)
+
+## 解題思路
+
+### 若可用除法（實際不行）
+
+計算所有元素的乘積，再逐一除以自身。但題目明確禁止，且 `0` 的存在會導致除零錯誤。
+
+### 最佳解：前綴積 × 後綴積 — O(n)
+
+對每個位置 `i`：
+
+- **左側前綴積**：`nums[0] × ... × nums[i-1]`
+- **右側後綴積**：`nums[i+1] × ... × nums[n-1]`
+
+兩者相乘即為 `answer[i]`。
+
+**空間優化**：先把左側前綴積填入輸出陣列，再用一個變數 `right` 從右往左一邊累乘後綴積、一邊更新答案，省略額外的後綴陣列。
+
+|                     | 時間複雜度 | 空間複雜度           |
+| ------------------- | ---------- | -------------------- |
+| 前綴陣列 + 後綴陣列 | O(n)       | O(n)                 |
+| 前綴積 + right 變數 | O(n)       | O(1)（不含輸出陣列） |
+
+## TypeScript 實作
+
+```typescript
+function productExceptSelf(nums: number[]): number[] {
+  const n = nums.length;
+  const answer = new Array<number>(n).fill(1);
+
+  // 第一次遍歷：answer[i] = nums[0] * ... * nums[i-1]
+  let left = 1;
+  for (let i = 0; i < n; i++) {
+    answer[i] = left;
+    left *= nums[i];
+  }
+
+  // 第二次遍歷：從右往左乘上後綴積
+  let right = 1;
+  for (let i = n - 1; i >= 0; i--) {
+    answer[i] *= right;
+    right *= nums[i];
+  }
+
+  return answer;
+}
+```
+
+## 執行步驟範例
+
+以 `nums = [1, 2, 3, 4]` 為例：
+
+**第一次遍歷（填入左側前綴積）：**
+
+| i   | answer\[i\] = left | left 更新後 |
+| --- | ------------------ | ----------- |
+| 0   | 1                  | 1           |
+| 1   | 1                  | 2           |
+| 2   | 2                  | 6           |
+| 3   | 6                  | 24          |
+
+`answer = [1, 1, 2, 6]`
+
+**第二次遍歷（右側後綴積相乘）：**
+
+| i   | answer\[i\] × right | right 更新後 |
+| --- | ------------------- | ------------ |
+| 3   | 6 × 1 = **6**       | 4            |
+| 2   | 2 × 4 = **8**       | 12           |
+| 1   | 1 × 12 = **12**     | 24           |
+| 0   | 1 × 24 = **24**     | 24           |
+
+最終 `answer = [24, 12, 8, 6]` ✓
