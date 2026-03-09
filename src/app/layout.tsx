@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 import { Analytics } from "@vercel/analytics/react";
 
-const BASE_URL = "https://dev-notes-m03d7ntmm-wilsonchen40172s-projects.vercel.app";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dev-notes-wilsonchen40172s-projects.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
