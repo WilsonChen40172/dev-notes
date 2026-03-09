@@ -1,0 +1,50 @@
+# 1. Two Sum（兩數之和）
+
+## 題目描述
+
+給定一個整數陣列 `nums` 和一個目標值 `target`，請你在該陣列中找出和為目標值的那**兩個**整數，並回傳它們的陣列索引。
+
+你可以假設每種輸入只會對應一個答案。但是，陣列中同一個元素在答案裡不能重複出現。
+
+> 原題連結：[LeetCode #1 - Two Sum](https://leetcode.com/problems/two-sum/)
+
+## 解題思路
+
+最直覺的解法是雙重迴圈，但時間複雜度會是 O(n²)。
+更好的做法是使用 **Hash Map** 來記錄我們已經遍歷過的數字與其索引。每次讀到一個新數字時，我們去 Map 中檢查 `target - 當前數字` 是否已經存在。
+
+|                    | 時間複雜度 | 空間複雜度 |
+| ------------------ | ---------- | ---------- |
+| 暴力解（雙迴圈）   | O(n²)      | O(1)       |
+| Hash Map（最佳解） | O(n)       | O(n)       |
+
+## TypeScript 實作
+
+```typescript
+function twoSum(nums: number[], target: number): number[] {
+  // 使用 Map 儲存已走訪過的數字與其 index
+  // key: 數字, value: index
+  const numMap = new Map<number, number>();
+
+  for (let i = 0; i < nums.length; i++) {
+    const complement = target - nums[i];
+
+    // 如果 complement 已經在 map 中，代表找到答案了
+    if (numMap.has(complement)) {
+      return [numMap.get(complement)!, i];
+    }
+
+    // 否則將當前數字與 index 存入 map
+    numMap.set(nums[i], i);
+  }
+
+  return [];
+}
+```
+
+## 執行步驟範例
+
+以 `nums = [2, 7, 11, 15]`、`target = 9` 為例：
+
+1. `i=0`：`complement = 9 - 2 = 7`，Map 為空，將 `{2: 0}` 存入
+2. `i=1`：`complement = 9 - 7 = 2`，Map 中有 `2`，回傳 `[0, 1]` ✓
