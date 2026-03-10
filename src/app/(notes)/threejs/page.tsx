@@ -1,4 +1,5 @@
 import { GeometryShowcaseDynamic as GeometryShowcase, ParticleWaveDynamic as ParticleWave } from '@/components/three/ThreeClientComponents'
+import ViewCounter from '@/components/ViewCounter'
 
 export const metadata = {
     title: 'Three.js 3D 渲染 | Dev Notes',
@@ -13,6 +14,7 @@ export default function ThreeJsPage() {
                 <p className="text-neutral-500 dark:text-neutral-400 text-lg">
                     WebGL 與 Three.js 的 3D 場景開發、材質光影與互動效果。以下為使用 React Three Fiber 實作的互動展示。
                 </p>
+                <ViewCounter slug="threejs" />
             </header>
 
             {/* Demo 1：幾何體展示台 */}

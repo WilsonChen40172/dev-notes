@@ -1,3 +1,5 @@
+import ViewCounter from '@/components/ViewCounter';
+
 export const metadata = {
     title: 'Zustand 狀態管理 | Dev Notes',
     description: 'Zustand 輕量級狀態管理：Store 建立、非同步操作、Middleware 與 TypeScript 整合。',
@@ -11,6 +13,7 @@ export default function ZustandPage() {
                 <p className="text-neutral-500 dark:text-neutral-400 text-lg">
                     輕量、無樣板、基於 Hook 的狀態管理方案：Store 建立、Slice 模式、非同步操作、Middleware（persist / devtools）與 TypeScript 整合。
                 </p>
+                <ViewCounter slug="zustand" />
             </header>
 
             {/* ── 1. 核心概念 ── */}

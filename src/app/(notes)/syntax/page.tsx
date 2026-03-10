@@ -1,3 +1,5 @@
+import ViewCounter from '@/components/ViewCounter';
+
 export const metadata = {
     title: '基礎與語法 | Dev Notes',
     description: 'TypeScript 與 React 的核心概念、Hooks 使用時機、JS 面試考點整理',
@@ -11,6 +13,7 @@ export default function SyntaxPage() {
                 <p className="text-neutral-500 dark:text-neutral-400 text-lg">
                     TypeScript、React Hooks 與 JavaScript 核心觀念整理，聚焦面試高頻考點與實際使用情境。
                 </p>
+                <ViewCounter slug="syntax" />
             </header>
 
             {/* ── React Hooks ── */}

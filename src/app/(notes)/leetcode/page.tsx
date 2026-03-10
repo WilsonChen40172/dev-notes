@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import ViewCounter from '@/components/ViewCounter';
 
 interface Problem {
     id: number;
@@ -128,6 +129,7 @@ export default function LeetCodePage() {
                 <p className="text-neutral-500 dark:text-neutral-400 text-lg">
                     演算法練習紀錄，包含解題思路、複雜度分析與最佳化策略。
                 </p>
+                <ViewCounter slug="leetcode" />
             </header>
 
             <div className="grid gap-4">
