@@ -7,16 +7,20 @@ interface Props {
     slug: string
 }
 
+const enabled = process.env.NEXT_PUBLIC_ENABLE_VIEW_COUNTER !== 'false'
+
 export default function ViewCounter({ slug }: Props) {
     const [views, setViews] = useState<number | null>(null)
 
     useEffect(() => {
+        if (!enabled || !supabase) return
+
         async function incrementAndFetch() {
             // 遞增 view count
-            await supabase.rpc('increment_view', { page_slug: slug })
+            await supabase!.rpc('increment_view', { page_slug: slug })
 
             // 讀取最新數值
-            const { data } = await supabase
+            const { data } = await supabase!
                 .from('page_views')
                 .select('view_count')
                 .eq('slug', slug)
@@ -28,7 +32,7 @@ export default function ViewCounter({ slug }: Props) {
         incrementAndFetch()
     }, [slug])
 
-    if (views === null) return null
+    if (!enabled || views === null) return null
 
     return (
         <span className="text-xs text-neutral-400 dark:text-neutral-500 flex items-center gap-1">
