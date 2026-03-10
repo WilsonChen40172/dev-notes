@@ -19,6 +19,9 @@ export default function Navbar() {
                     <Link href="/redux" className="hover:text-black dark:hover:text-white transition-colors">
                         Redux
                     </Link>
+                    <Link href="/zustand" className="hover:text-black dark:hover:text-white transition-colors">
+                        Zustand
+                    </Link>
                     <Link href="/threejs" className="hover:text-black dark:hover:text-white transition-colors">
                         Three.js
                     </Link>

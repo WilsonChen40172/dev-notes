@@ -7,6 +7,7 @@ import path from 'path'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import MdxPage from '@/components/MdxPage'
+import ViewCounter from '@/components/ViewCounter'
 
 const CONTENT_DIR = path.join(process.cwd(), 'src/content/leetcode')
 
@@ -60,5 +61,12 @@ export default async function LeetCodeDetailPage(
         notFound()
     }
 
-    return <MdxPage contentPath={`src/content/leetcode/${slug}.mdx`} />
+    return (
+        <div className="flex flex-col gap-2">
+            <div className="flex justify-end">
+                <ViewCounter slug={`leetcode/${slug}`} />
+            </div>
+            <MdxPage contentPath={`src/content/leetcode/${slug}.mdx`} />
+        </div>
+    )
 }

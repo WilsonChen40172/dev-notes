@@ -8,7 +8,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?logo=tailwindcss)](https://tailwindcss.com)
 [![MDX](https://img.shields.io/badge/MDX-3-1B1F24?logo=mdx)](https://mdxjs.com)
 
-**[🌐 Live Demo](https://dev-notes-m03d7ntmm-wilsonchen40172s-projects.vercel.app)**
+**[🌐 Live Demo](https://dev-notes-wilsonchen40172s-projects.vercel.app/)**
 
 ---
 

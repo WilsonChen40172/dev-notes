@@ -23,6 +23,12 @@ export default function Home() {
       color: "bg-purple-500",
     },
     {
+      title: "Zustand 狀態管理",
+      description: "輕量、無樣板的狀態管理方案，涵蓋 Store 建立、Middleware 與 TypeScript 整合。",
+      href: "/zustand",
+      color: "bg-orange-500",
+    },
+    {
       title: "Three.js 3D 渲染",
       description: "WebGL 與 Three.js 的 3D 場景開發、材質光影與互動效果筆記。",
       href: "/threejs",
